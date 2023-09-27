@@ -64,15 +64,47 @@ function renderLicenseSection(license) {
 }
 
 function generateMarkdown(data) {
+  const contributingSection = data.contributing ? `- [Contributing](#contributing)` : ''
+
   return `# ${data.title}
 
 ## Description
 
 ${data.description}
 
-### License
+## Table of Contents
 
-${renderLicenseSection(data.license)}
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+${data.contributing ? `- [Contributing](#contributing)
+` : ''}${data.tests ? `- [Tests](#tests)
+` : ''}${data.questions ? `- [Questions](#questions)
+` : ''}
+## Installation
+
+${data.installation}
+
+## Usage
+
+${data.usage}
+
+## License
+
+${renderLicenseSection(data.license)}${data.contributing ? `
+
+## Contributing
+
+` + data.contributing : ''}${data.tests ? `
+
+## Tests
+
+` + data.tests : ''}${data.questions ? `
+
+## Questions
+
+` + data.questions : ''}
 `.trim() + '\n';
 }
 
