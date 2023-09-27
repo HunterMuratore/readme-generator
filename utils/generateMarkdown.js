@@ -53,19 +53,27 @@ function renderLicenseLink(license) {
 }
 
 function renderLicenseSection(license) {
-  return `![License: ${renderLicenseLink(license)}](https://img.shields.io/badge/License-${renderLicenseLink(license)}-${renderLicenseBadge(license)}.svg)` ? license : '';
+  const licenseLink = renderLicenseLink(license);
+  const licenseBadge = renderLicenseBadge(license);
+
+ if (licenseLink && licenseBadge) {
+    return `![License: ${licenseLink}](https://img.shields.io/badge/License-${licenseLink}-${licenseBadge}.svg)`;
+  }
+
+  return '';
 }
 
 function generateMarkdown(data) {
   return `# ${data.title}
 
 ## Description
+
 ${data.description}
 
 ### License
 
 ${renderLicenseSection(data.license)}
-`;
+`.trim() + '\n';
 }
 
 module.exports = generateMarkdown;
