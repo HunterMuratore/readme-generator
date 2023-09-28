@@ -164,7 +164,9 @@ ${generateContributorList(contributors)}` + `${generateResourceLinks(resources)}
 ` : ``}${data.questionsGit || data.questionsEmail ? `
 ## Questions
 
-` + `${data.questionsGit ? `GitHub account: [https://github.com/${data.questionsGit}](https://github.com/${data.questionsGit})
+` + `${data.questionsGit ? `GitHub account: 
+
+>[https://github.com/${data.questionsGit}](https://github.com/${data.questionsGit})
 ` : ''}${data.questionsEmail ? `
 Reach me through email here to ask any questions about the app!
 
