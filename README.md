@@ -29,7 +29,9 @@ This app generates a README.md file for the user based off of information receiv
 
 Use this app to quickly generate a professionally formatted README file for any of your project repos!
 
-![Generated README file](./img/readme.png)
+![Generate README in Terminal](./img/readme.png)
+
+![Video Demonstration of App](./img/README.mp4)
 
 ## License
 
