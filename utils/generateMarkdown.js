@@ -160,9 +160,8 @@ This project is under the license of ${data.license}.${resources.length || contr
 ${generateContributorList(contributors)}` + `${generateResourceLinks(resources)}` : ''}${data.tests ? `
 ## Tests
 
-` + data.tests 
-: ''}${data.questionsGit || data.questionsEmail ? `
-
+` + data.tests + `
+` : ``}${data.questionsGit || data.questionsEmail ? `
 ## Questions
 
 ` + `${data.questionsGit ? `GitHub account: [https://github.com/${data.questionsGit}](https://github.com/${data.questionsGit})

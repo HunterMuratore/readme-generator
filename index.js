@@ -26,7 +26,7 @@ const questions = [
     },
     {
         name: 'usage',
-        message: 'Enter the instructions for use of your project (required):',
+        message: 'Enter the use cases of your project (required):',
         validate: validateInput
     },
     {
