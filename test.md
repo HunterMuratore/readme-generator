@@ -1,8 +1,8 @@
-# sdkjfsk
+# tete
 
 ## Description
 
-sd
+tetedg
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
@@ -18,11 +18,11 @@ sd
 
 ## Installation
 
-fsf
+dgsdgsdg
 
 ## Usage
 
-s
+dfgdd
 
 ## License
 
@@ -31,6 +31,10 @@ This project is under the license of MIT.
 ## Contributing
 
 
+  Contributors:
+  
+Resources:
+
 
 ## Tests
 
@@ -38,5 +42,6 @@ df
 
 ## Questions
 
+GitHub account: [https://github.com/vervdf](https://github.com/vervdf)
 
-Email: [sdf](mailto:sdf)
+Email: [v](mailto:v)

@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown');
 let userAnswers = {};
 const resourceLinks = [];
+const contributors = [];
 
 const questions = [
     'Enter the name of the file you want to create (required):', 
@@ -68,7 +69,7 @@ function init() {
             }
         ]).then((answers) => {
             userAnswers = answers;
-            showResourceMenu();
+            showChoiceMenu();
         });
 }
 
@@ -78,22 +79,34 @@ function addResourceLink() {
         message: questions[6]
     }).then(answer => {
         resourceLinks.push(answer.link);
-        showResourceMenu();
+        showChoiceMenu();
     });
 }
 
-function showResourceMenu() {
+function addContributor() {
+    inquirer.prompt({
+        name: 'contributor',
+        message: 'Enter the name of the contributor:'
+    }).then(answer => {
+        contributors.push(answer.contributor);
+        showChoiceMenu();
+    });
+}
+
+function showChoiceMenu() {
     inquirer.prompt({
         name: 'choice',
         type: 'list',
-        choices: ['Add a resource:', 'Move on'],
+        choices: ['Add a contributor', 'Add a resource', 'Finish'],
         message: 'Please select an option'
     }).then(answer => {
-        if (answer.choice === 'Add a resource:') {
+        if (answer.choice === 'Add a resource') {
             return addResourceLink();
+        } else if (answer.choice === 'Add a contributor') {
+            return addContributor();
         }
 
-        writeToFile(userAnswers.fileName, generateMarkdown(userAnswers, resourceLinks));
+        writeToFile(userAnswers.fileName, generateMarkdown(userAnswers, resourceLinks, contributors));
     });
 }
 
