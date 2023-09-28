@@ -12,7 +12,7 @@ const questions = [
     {
         name: 'fileName',
         message: 'Enter the name of the file you want to create (required):',
-        validate: validateInput
+        validate: validateMD
     },
     {
         name: 'title',
@@ -65,9 +65,17 @@ function writeToFile(fileName, data) {
     });
 }
 
+function validateMD(input) {
+    if (input.split('.')[1] === 'md') {
+        return true;
+    }
+    
+    return 'File name must end in .md - try again';
+}
+
 function validateInput(input) {
     if (input.trim() === '') {
-        return 'Entry cannot be empty';
+        return 'Entry cannot be empty - try again';
     }
 
     return true;
