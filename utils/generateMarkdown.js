@@ -79,7 +79,7 @@ Resources:
 
 function generateContributorList(contributorArr) {
   let html = `
-  Contributors:
+Contributors:
   `;
   
     contributorArr.forEach(contributor => {
@@ -91,7 +91,19 @@ function generateContributorList(contributorArr) {
     return html;
 }
 
-function generateMarkdown(data, resources, contributors) {
+function generatePhotos(photoArr) {
+  let html = ``;
+  
+    photoArr.forEach(photo => {
+      html += `
+![${photo.alt}](${photo.link})
+`;
+    });
+  
+    return html;
+}
+
+function generateMarkdown(data, resources, contributors, photos) {
   return `# ${data.title}
 
 ## Description
@@ -117,13 +129,13 @@ ${data.installation}
 ## Usage
 
 ${data.usage}
+${generatePhotos(photos)}
 
 ## License
 
 This project is under the license of ${data.license}.${resources || contributors ? `
 
 ## Contributing
-
 ` + generateContributorList(contributors) + generateResourceLinks(resources): ''}${data.tests ? `
 
 ## Tests
