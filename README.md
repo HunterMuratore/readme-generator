@@ -29,9 +29,8 @@ This app generates a README.md file for the user based off of information receiv
 
 Use this app to quickly generate a professionally formatted README file for any of your project repos!
 
-![Generate README in Terminal](./img/readme.png)
-
-[![Video Demonstration of App](https://img.youtube.com/vi/W8Cs4aJQ-fo/maxresdefault.jpg)](https://youtu.be/W8Cs4aJQ-fo)
+[![Video Demonstration of App](https://img.youtube.com/vi/W8Cs4aJQ-fo/maxresdefault.jpg)](https://www.youtube.com/watch?v=W8Cs4aJQ-fo)
+>Click the image to be taken to this app's demo video on youtube
 
 ## License
 
@@ -45,7 +44,9 @@ Resources:
 
 ## Questions
 
-GitHub account: [https://github.com/HunterMuratore](https://github.com/HunterMuratore)
+GitHub account: 
+
+>[https://github.com/HunterMuratore](https://github.com/HunterMuratore)
 
 Reach me through email here to ask any questions about the app!
 
