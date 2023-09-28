@@ -64,13 +64,17 @@ function renderLicenseSection(license) {
 }
 
 function generateResourceLinks(resourceArr) {
-  let html = `
+  let html = ``;
+
+  if(resourceArr.length > 0) {
+    html = `
 Resources:
 `;
+  }
 
   resourceArr.forEach(resource => {
     html += `
-  * [${resource}](${resource})
+- [${resource}](${resource})
 `;
   });
 
@@ -78,13 +82,17 @@ Resources:
 }
 
 function generateContributorList(contributorArr) {
-  let html = `
+  let html = ``;
+
+  if(contributorArr.length > 0) {
+    html = `
 Contributors:
-  `;
+`;
+  }
   
     contributorArr.forEach(contributor => {
       html += `
-  * ${contributor}
+- ${contributor}
 `;
     });
   
@@ -103,7 +111,21 @@ function generatePhotos(photoArr) {
     return html;
 }
 
-function generateMarkdown(data, resources, contributors, photos) {
+function generateInstallationSteps(installationStepsArr) {
+  let html = ``;
+  let count = 0;
+  
+    installationStepsArr.forEach(step => {
+      count++;
+      html += `
+${count}. ${step}
+`;
+    });
+  
+    return html;
+}
+
+function generateMarkdown(data, resources, contributors, photos, installationSteps, deployedProject) {
   return `# ${data.title}
 
 ## Description
@@ -114,40 +136,40 @@ ${renderLicenseSection(data.license)}
 
 ## Table of Contents
 
-- [Description](#description)
-- [Installation](#installation)
+- [Description](#description)${installationSteps.length ? `
+- [Installation](#installation)` : ''}
 - [Usage](#usage)
 - [License](#license)
-${resources ? `- [Contributing](#contributing)
+${resources.length || contributors.length ? `- [Contributing](#contributing)
 ` : ''}${data.tests ? `- [Tests](#tests)
 ` : ''}${data.questionsGit || data.questionsEmail ? `- [Questions](#questions)
-` : ''}
-## Installation
-
-${data.installation}
-
+` : ''}${installationSteps.length ? `
+## Installation` : ''}
+${generateInstallationSteps(installationSteps)}
 ## Usage
 
 ${data.usage}
+${deployedProject ? `
+Click [here](${deployedProject}) to get to the deployed project` : ''}
 ${generatePhotos(photos)}
-
 ## License
 
-This project is under the license of ${data.license}.${resources || contributors ? `
+This project is under the license of ${data.license}.${resources.length || contributors.length ? `
 
-## Contributing
-` + generateContributorList(contributors) + generateResourceLinks(resources): ''}${data.tests ? `
-
+## Contributing` + `
+${generateContributorList(contributors)}` + `${generateResourceLinks(resources)}` : ''}${data.tests ? `
 ## Tests
 
-` + data.tests : ''}${data.questionsGit || data.questionsEmail ? `
+` + data.tests 
+: ''}${data.questionsGit || data.questionsEmail ? `
 
 ## Questions
 
 ` + `${data.questionsGit ? `GitHub account: [https://github.com/${data.questionsGit}](https://github.com/${data.questionsGit})
 ` : ''}${data.questionsEmail ? `
-Email: [${data.questionsEmail}](mailto:${data.questionsEmail})` : ''}` : ''}
-`.trim() + '\n';
+Reach me through email here to ask any questions about the app!
+
+>Email: [${data.questionsEmail}](mailto:${data.questionsEmail})` : ''}` : ''}` + '\n';
 }
 
 module.exports = generateMarkdown;
