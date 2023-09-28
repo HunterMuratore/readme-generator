@@ -44,7 +44,7 @@ Resources:
 
 ## Questions
 
-GitHub account: 
+GitHub account:
 
 >[https://github.com/HunterMuratore](https://github.com/HunterMuratore)
 
