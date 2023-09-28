@@ -64,13 +64,13 @@ function renderLicenseSection(license) {
 }
 
 function generateMarkdown(data) {
-  const contributingSection = data.contributing ? `- [Contributing](#contributing)` : ''
-
   return `# ${data.title}
 
 ## Description
 
 ${data.description}
+
+${renderLicenseSection(data.license)}
 
 ## Table of Contents
 
@@ -80,7 +80,7 @@ ${data.description}
 - [License](#license)
 ${data.contributing ? `- [Contributing](#contributing)
 ` : ''}${data.tests ? `- [Tests](#tests)
-` : ''}${data.questions ? `- [Questions](#questions)
+` : ''}${data.questionsGit || data.questionsEmail ? `- [Questions](#questions)
 ` : ''}
 ## Installation
 
@@ -92,7 +92,7 @@ ${data.usage}
 
 ## License
 
-${renderLicenseSection(data.license)}${data.contributing ? `
+This project is under the license of ${data.license}.${data.contributing ? `
 
 ## Contributing
 
@@ -100,11 +100,12 @@ ${renderLicenseSection(data.license)}${data.contributing ? `
 
 ## Tests
 
-` + data.tests : ''}${data.questions ? `
+` + data.tests : ''}${data.questionsGit || data.questionsEmail ? `
 
 ## Questions
 
-` + data.questions : ''}
+` + `${data.questionsGit ? `GitHub account: [https://github.com/${data.questionsGit}](mailto:https://github.com/${data.questionsGit})
+` : ''}${data.questionsEmail ? `Email: [${data.questionsEmail}](mailto:${data.questionsEmail})` : ''}` : ''}
 `.trim() + '\n';
 }
 

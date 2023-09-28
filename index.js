@@ -1,6 +1,8 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown');
+const userAnswers = {};
+const resourceLinks = [];
 
 const questions = [
     'Enter the name of the file you want to create (required):', 
@@ -9,9 +11,10 @@ const questions = [
     'Enter the installation steps for your project (required):',
     'Enter the instructions and examples for use of your project (required):',
     'Please choose the license:',
-    'List your collaborators and any links to resources (Leave EMPTY if none):', // Make this a dropdown where they can choose if they have links so that they can be formatted
+    'Enter your resource link:',
     'Give exmaples of how to run the tests for your project (Leave EMPTY if none):',
-    'Enter frequently asked questions and answers about your project (Leave EMPTY if none):'
+    'Enter your GitHub username for the questions section:',
+    'Enter your email for the questions section:'
 ];
 
 function writeToFile(fileName, data) {
@@ -52,21 +55,51 @@ function init() {
                 choices: ['MIT', 'ISC', 'EPL_1.0', 'Apache_2.0', 'Boost_1.0', 'BSD_3--Clause', 'GPLv3', 'IPL_1.0', 'MPL_2.0', 'ODbL', 'No License']
             },
             {
-                name: 'contributing',
-                message: questions[6]
-            },
-            {
                 name: 'tests',
                 message: questions[7]
             },
             {
-                name: 'questions',
+                name: 'questionsGit',
                 message: questions[8]
             },
+            {
+                name: 'questionsEmail',
+                message: questions[9]
+            }
         ])
         .then((answers) => {
-            writeToFile(answers.fileName, generateMarkdown(answers));
+            userAnswers = answers;
+            showResourceMenu();
+            if (userAnswers) {
+                writeToFile(userAnswers.fileName, generateMarkdown(userAnswers));
+            }
         });
+}
+
+function addResourceLink() {
+    inquirer.prompt({
+        name: 'link',
+        message: questions[6]
+    }).then(answer => {
+        resourceLinks.push(answer.link);
+        showResourceMenu();
+    })
+}
+
+function showResourceMenu() {
+    inquirer.prompt({
+        name: 'choice',
+        type: 'list',
+        choices: ['Add a resource', 'Move on'],
+        message: 'Please select an option'
+    }).then(answer => {
+        if (answer.choice === 'Add a resource') {
+            return addResourceLink();
+        }
+        
+        userAnswers.resources = resourceLinks;
+        finishQuestions();
+    })
 }
 
 init();
