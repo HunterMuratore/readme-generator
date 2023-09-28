@@ -31,7 +31,7 @@ Use this app to quickly generate a professionally formatted README file for any 
 
 ![Generate README in Terminal](./img/readme.png)
 
-[![Video Demonstration of App](https://img.youtube.com/vi/W8Cs4aJQ-fo/maxresdefault.jpg)](https://youtu.be/W8Cs4aJQ-fo)
+[![Video Demonstration of App](https://img.youtube.com/vi/W8Cs4aJQ-fo/maxresdefault.jpg)](https://www.youtube.com/watch?v=W8Cs4aJQ-fo)
 
 ## License
 
