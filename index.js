@@ -1,7 +1,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown');
-const userAnswers = {};
+let userAnswers = {};
 const resourceLinks = [];
 
 const questions = [
@@ -66,13 +66,9 @@ function init() {
                 name: 'questionsEmail',
                 message: questions[9]
             }
-        ])
-        .then((answers) => {
+        ]).then((answers) => {
             userAnswers = answers;
             showResourceMenu();
-            if (userAnswers) {
-                writeToFile(userAnswers.fileName, generateMarkdown(userAnswers));
-            }
         });
 }
 
@@ -83,23 +79,22 @@ function addResourceLink() {
     }).then(answer => {
         resourceLinks.push(answer.link);
         showResourceMenu();
-    })
+    });
 }
 
 function showResourceMenu() {
     inquirer.prompt({
         name: 'choice',
         type: 'list',
-        choices: ['Add a resource', 'Move on'],
+        choices: ['Add a resource:', 'Move on'],
         message: 'Please select an option'
     }).then(answer => {
-        if (answer.choice === 'Add a resource') {
+        if (answer.choice === 'Add a resource:') {
             return addResourceLink();
         }
-        
-        userAnswers.resources = resourceLinks;
-        finishQuestions();
-    })
+
+        writeToFile(userAnswers.fileName, generateMarkdown(userAnswers, resourceLinks));
+    });
 }
 
 init();

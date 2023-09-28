@@ -63,7 +63,19 @@ function renderLicenseSection(license) {
   return '';
 }
 
-function generateMarkdown(data) {
+function generateResourceLinks(resourceArr) {
+  let html = ``;
+
+  resourceArr.forEach(resource => {
+    html += `
+[${resource}](${resource})
+`;
+  });
+
+  return html.trim();
+}
+
+function generateMarkdown(data, resources) {
   return `# ${data.title}
 
 ## Description
@@ -78,7 +90,7 @@ ${renderLicenseSection(data.license)}
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
-${data.contributing ? `- [Contributing](#contributing)
+${resources ? `- [Contributing](#contributing)
 ` : ''}${data.tests ? `- [Tests](#tests)
 ` : ''}${data.questionsGit || data.questionsEmail ? `- [Questions](#questions)
 ` : ''}
@@ -92,11 +104,11 @@ ${data.usage}
 
 ## License
 
-This project is under the license of ${data.license}.${data.contributing ? `
+This project is under the license of ${data.license}.${resources ? `
 
 ## Contributing
 
-` + data.contributing : ''}${data.tests ? `
+` + generateResourceLinks(resources): ''}${data.tests ? `
 
 ## Tests
 
@@ -105,7 +117,8 @@ This project is under the license of ${data.license}.${data.contributing ? `
 ## Questions
 
 ` + `${data.questionsGit ? `GitHub account: [https://github.com/${data.questionsGit}](mailto:https://github.com/${data.questionsGit})
-` : ''}${data.questionsEmail ? `Email: [${data.questionsEmail}](mailto:${data.questionsEmail})` : ''}` : ''}
+` : ''}${data.questionsEmail ? `
+Email: [${data.questionsEmail}](mailto:${data.questionsEmail})` : ''}` : ''}
 `.trim() + '\n';
 }
 
