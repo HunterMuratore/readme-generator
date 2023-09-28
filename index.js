@@ -5,27 +5,29 @@ let userAnswers = {};
 const resourceLinks = [];
 const contributors = [];
 const photos = [];
+const installationSteps = [];
+let deployedProject = '';
 
 const questions = [
     {
         name: 'fileName',
-        message: 'Enter the name of the file you want to create (required):'
+        message: 'Enter the name of the file you want to create (required):',
+        validate: validateInput
     },
     {
         name: 'title',
-        message: 'Enter your project title (required):'
+        message: 'Enter your project title (required):',
+        validate: validateInput
     },
     {
         name: 'description',
-        message: 'Enter your project description (required):'
-    },
-    {
-        name: 'installation',
-        message: 'Enter the installation steps for your project (required):'
+        message: 'Enter your project description (required):',
+        validate: validateInput
     },
     {
         name: 'usage',
-        message: 'Enter the instructions for use of your project (required):'
+        message: 'Enter the instructions for use of your project (required):',
+        validate: validateInput
     },
     {
         type: 'list',
@@ -47,6 +49,14 @@ const questions = [
     }
 ];
 
+function init() {
+    inquirer
+        .prompt(questions).then((answers) => {
+            userAnswers = answers;
+            showChoiceMenu();
+        });
+}
+
 function writeToFile(fileName, data) {
     fs.writeFile(`./${fileName}`, data, (err) => {
         if (err) throw err;
@@ -55,12 +65,12 @@ function writeToFile(fileName, data) {
     });
 }
 
-function init() {
-    inquirer
-        .prompt(questions).then((answers) => {
-            userAnswers = answers;
-            showChoiceMenu();
-        });
+function validateInput(input) {
+    if (input.trim() === '') {
+        return 'Entry cannot be empty';
+    }
+
+    return true;
 }
 
 function addPhotos() {
@@ -99,22 +109,51 @@ function addContributor() {
     });
 }
 
+function addDeployedProject() {
+    inquirer.prompt({
+        name: 'deployed',
+        message: 'Enter the link to the deployed project:'
+    }).then(answer => {
+        deployedProject = answer.deployed;
+        showChoiceMenu();
+    });
+}
+
+function addInstallationSteps() {
+    inquirer.prompt({
+        name: 'step',
+        message: 'Enter an installation step (or type "stop" to finish adding steps):',
+    }).then(answer => {
+        const step = answer.step;
+        if (step.toLowerCase() === 'stop') {
+            showChoiceMenu();
+        } else {
+            installationSteps.push(step);
+            addInstallationSteps();
+        }
+    });
+}
+
 function showChoiceMenu() {
     inquirer.prompt({
         name: 'choice',
         type: 'list',
-        choices: ['Add an image', 'Add a contributor', 'Add a resource', 'Finish'],
+        choices: ['Add an image or video', 'Add a contributor', 'Add a resource', 'Add installation steps', 'Add a deployed project link', 'Finish'],
         message: 'Please select an option'
     }).then(answer => {
         if (answer.choice === 'Add a resource') {
             return addResourceLink();
         } else if (answer.choice === 'Add a contributor') {
             return addContributor();
-        } else if (answer.choice === 'Add an image') {
+        } else if (answer.choice === 'Add an image or video') {
             return addPhotos();
+        } else if (answer.choice === 'Add a deployed project link') {
+            return addDeployedProject();
+        } else if (answer.choice === 'Add installation steps') {
+            return addInstallationSteps();
         }
 
-        writeToFile(userAnswers.fileName, generateMarkdown(userAnswers, resourceLinks, contributors, photos));
+        writeToFile(userAnswers.fileName, generateMarkdown(userAnswers, resourceLinks, contributors, photos, installationSteps, deployedProject));
     });
 }
 
